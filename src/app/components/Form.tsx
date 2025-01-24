@@ -1,0 +1,72 @@
+'use client'
+import React, {useEffect, useState} from 'react'
+import {useActionState} from "react";
+import Glasscard from "@/app/components/common/ui/card/glasscard";
+import {addUrl} from "@/app/actions/action"
+function Form() {
+
+    const [state, action, isPending] = useActionState(addUrl, undefined)
+
+    return (
+        <div className={'lg:w-1/2'}>
+            <Glasscard>
+                <div className="w-full p-6 md:p-8">
+                    <h2 className="font-bold text-2xl pb-7 text-center">Get Started</h2>
+                    <p className="font-semibold text-base pb-4 text-center">
+                        Paste your long URL below and click the button to shorten it.
+                    </p>
+                    <form action={action}>
+                        <input
+                            type="text"
+                            className="w-full p-4 my-4 rounded-lg border border-solid border-[rgba(255,255,255,0.12)] bg-[rgba(255,255,255,0.01)] shadow-[0_0_8px_rgba(255,255,255,0.2)]
+                active:shadow-[0_0_8px_rgba(255,255,255,0.4)] focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-opacity-50"
+                            placeholder="https://example.com/my-super-long-url"
+                            name={'url'}
+                            required={true}
+                        />
+                        <div className={'my-1 flex justify-center items-center'}>
+                            {state?.errors?.url?.map((url, index) => (
+                                <p key={index} className={'text-red-600 text-sm'}>{url}</p>
+                            ))}
+
+                        </div>
+
+                        <div className={"w-full flex justify-center pt-4"}>
+                            <button
+                                className="md:w-1/2 p-2 px-8 rounded-lg bg-gradient-to-r from-cyan-400 to-purple-400 text-white font-bold text-center text-lg flex justify-center items-center"
+                                type={"submit"} disabled={isPending}>
+                                {isPending ? <span className="flex items-center">
+                    <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"
+                         fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                              strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span className={'font-bold'}>Creating your link</span>
+                  </span> : <span className={'font-bold'}>Shorten URL</span>}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </Glasscard>
+        </div>
+    )
+}
+
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function TimedMessageConcise({ message } : {message: string}) {
+    const [isVisible, setIsVisible] = useState(true);
+
+    useEffect(() => {
+        if (message) {
+            const timeoutId = setTimeout(() => setIsVisible(false), 3000);
+            return () => clearTimeout(timeoutId);
+        }
+    }, [message]);
+
+    return isVisible && message ? <p>{message}</p> : null;
+}
+
+export default Form

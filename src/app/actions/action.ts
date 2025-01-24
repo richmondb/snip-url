@@ -1,73 +1,71 @@
-'use server'
+"use server";
 
-import {urlSchema} from "@/lib/schema/url-schema";
-import {insertUrl} from "@/db/db";
+import { insertUrl } from "@/db/db";
 import generateShortCode from "@/lib/generate-short-url";
-import {revalidatePath} from "next/cache";
+import { urlSchema } from "@/lib/schema/url-schema";
+import { revalidatePath } from "next/cache";
 
-type returnState = | {
-    success: boolean,
-    message?: string,
-    errors?:{
-        url?: string[]
-    } | null
-    input?: string,
-}| undefined
+type returnState =
+	| {
+			success: boolean;
+			message?: string;
+			errors?: {
+				url?: string[];
+			} | null;
+			input?: string;
+	  }
+	| undefined;
 
-export const addUrl = async (prevState: returnState,form: FormData) => {
+export const addUrl = async (prevState: returnState, form: FormData) => {
+	// const url  = form.get('url')
+	//
+	// console.log('url', url)
 
-    // const url  = form.get('url')
-    //
-    // console.log('url', url)
+	const formData = {
+		url: form.get("url"),
+	};
 
-    const formData = {
-        url: form.get('url')
-    }
+	console.log(formData);
 
-    console.log(formData)
+	// await new Promise((resolve) => setTimeout(resolve, 1000))
 
-    // await new Promise((resolve) => setTimeout(resolve, 1000))
+	const parsedUrl = urlSchema.safeParse(formData);
 
-    const parsedUrl = urlSchema.safeParse(formData)
+	console.log("parsedurl success", parsedUrl.success);
 
-    console.log("parsedurl success", parsedUrl.success)
+	if (!parsedUrl.success) {
+		const errors = parsedUrl.error.flatten().fieldErrors;
+		console.error({
+			success: false,
+			message: "",
+			errors: errors,
+			input: formData.url as string,
+		});
 
-    if (!parsedUrl.success) {
-        const errors = parsedUrl.error.flatten().fieldErrors;
-        console.error(
-            {
-                success: false,
-                message: '',
-                errors: errors,
-                input: (formData.url as string)
-            }
-        )
+		revalidatePath("/");
 
-        revalidatePath('/')
+		return {
+			success: false,
+			message: "",
+			errors: errors,
+			input: formData.url as string,
+		};
+	}
 
-        return {
-            success: false,
-            message: '',
-            errors: errors,
-            input: (formData.url as string)
-        }
-    }
+	const uid = generateShortCode();
 
-    const uid = generateShortCode()
+	console.log(uid);
 
-    console.log(uid)
+	const result = insertUrl(formData.url as string, uid);
 
-    const result = insertUrl(formData.url as string, uid)
+	console.log(result);
 
-    console.log(result)
+	revalidatePath("/");
 
-    revalidatePath('/')
-
-    return {
-        success: true,
-        message: 'Successfully inserted',
-        errors: null,
-        input: (formData.url as string)
-    }
-
-}
+	return {
+		success: true,
+		message: "Successfully inserted",
+		errors: null,
+		input: formData.url as string,
+	};
+};

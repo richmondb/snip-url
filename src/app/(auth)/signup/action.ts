@@ -10,7 +10,7 @@ import { redirect } from "next/navigation";
 import type { z } from "zod";
 
 async function signupAction(state: SignupFormState, formData: FormData) {
-	await new Promise((resolve) => setTimeout(resolve, 1000));
+	// await new Promise((resolve) => setTimeout(resolve, 1000));
 
 	// get raw form data
 	const rawData: z.infer<typeof SignupFormSchema> = {

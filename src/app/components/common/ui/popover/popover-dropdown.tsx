@@ -13,14 +13,14 @@ function PopoverDropdown({ id, url }: { id: string; url: string }) {
 	const handleToggle = async () => {
 		const result = await toggleActive(id);
 		if (result) {
-			console.log("result", result);
+			// console.log("result", result);
 		}
 	};
 
 	const handleDelete = async () => {
 		const result = await deleteUrl(id);
 		if (result) {
-			console.log("result", result);
+			// console.log("result", result);
 			close();
 		}
 	};
@@ -29,7 +29,7 @@ function PopoverDropdown({ id, url }: { id: string; url: string }) {
 		<Popover className="relative" key={id}>
 			<PopoverButton>Action</PopoverButton>
 			<PopoverPanel
-				anchor="bottom start"
+				anchor="bottom"
 				className="flex flex-col bg-white/15 backdrop-blur-lg rounded"
 			>
 				<CloseButton

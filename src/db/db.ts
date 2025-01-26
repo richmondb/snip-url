@@ -1,6 +1,6 @@
 import type { urlType } from "@/lib/definitions/url-type";
 import Database from "better-sqlite3";
-import type { Statement } from "better-sqlite3";
+
 const db = new Database("db.sqlite");
 db.pragma("journal_mode = WAL");
 
@@ -10,28 +10,29 @@ export const createTable = db.prepare(
          url TEXT,
          short_code TEXT,
          active BOOLEAN DEFAULT TRUE,
-         user_id INTEGER)
+         user_id TEXT,
+		 FOREIGN KEY (user_id) REFERENCES user(id))
  `,
 );
 
 createTable.run();
 
-export const insertUrl = (url: string, short_code: string) => {
+export const insertUrl = (url: string, shortCode: string, userId: string) => {
 	const query = db.prepare(
 		"INSERT INTO urls (url, short_code, active, user_id) VALUES (?, ?, ?, ?)",
 	);
 
-	const result = query.run(url, short_code, 1, 0);
+	const result = query.run(url, shortCode, 1, userId);
 
-	console.log(result);
+	// console.log(result);
 
 	return result;
 };
 
-export const getAllUrls = () => {
-	const query: Statement<urlType[]> = db.prepare("SELECT * FROM urls");
-	const result = query.all() as urlType[];
-	console.log(result);
+export const getAllUrls = (userId: string) => {
+	const query = db.prepare("SELECT * FROM urls WHERE user_id = ?");
+	const result = query.all(userId) as urlType[];
+	// console.log(result);
 	return result;
 };
 
@@ -48,7 +49,7 @@ export const getUrl = (short_code: string) => {
 		return null;
 	}
 
-	console.log(result);
+	// console.log(result);
 
 	return result;
 };

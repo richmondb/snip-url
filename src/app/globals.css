@@ -51,20 +51,15 @@ html:focus-within {
 	scroll-behavior: smooth;
 }
 
-html,
-body {
-	height: 100%;
-	margin: 0;
+html {
+	scroll-behavior: smooth;
+	box-sizing: border-box;
 }
 
 body {
 	margin: 0;
-	display: flex;
 	position: relative;
-	place-items: center;
-	place-content: center;
 	min-width: 320px;
 	width: 100%;
-	min-height: 100vh;
-	@apply py-36 sm:px-16 lg:px-36;
+	height: 100%;
 }

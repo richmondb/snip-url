@@ -2,6 +2,7 @@
 
 import { insertUrl } from "@/db/db";
 import generateShortCode from "@/lib/generate-short-url";
+import { isSession } from "@/lib/schema/server";
 import { urlSchema } from "@/lib/schema/url-schema";
 import { revalidatePath } from "next/cache";
 
@@ -17,17 +18,9 @@ type returnState =
 	| undefined;
 
 export const addUrl = async (prevState: returnState, form: FormData) => {
-	// const url  = form.get('url')
-	//
-	// console.log('url', url)
-
 	const formData = {
 		url: form.get("url"),
 	};
-
-	console.log(formData);
-
-	// await new Promise((resolve) => setTimeout(resolve, 1000))
 
 	const parsedUrl = urlSchema.safeParse(formData);
 
@@ -37,7 +30,7 @@ export const addUrl = async (prevState: returnState, form: FormData) => {
 		const errors = parsedUrl.error.flatten().fieldErrors;
 		console.error({
 			success: false,
-			message: "",
+			message: undefined,
 			errors: errors,
 			input: formData.url as string,
 		});
@@ -46,26 +39,39 @@ export const addUrl = async (prevState: returnState, form: FormData) => {
 
 		return {
 			success: false,
-			message: "",
+			message: undefined,
 			errors: errors,
 			input: formData.url as string,
 		};
 	}
 
+	// create a unique string using nanoid
 	const uid = generateShortCode();
 
-	console.log(uid);
+	try {
+		const session = await isSession();
 
-	const result = insertUrl(formData.url as string, uid);
+		const userId = session?.user.id as string;
 
-	console.log(result);
+		const result = insertUrl(formData.url as string, uid, userId);
+
+		console.log("session", result);
+	} catch (e) {
+		console.error(e);
+		return {
+			success: false,
+			message: undefined,
+			errors: undefined,
+			input: formData.url as string,
+		};
+	}
 
 	revalidatePath("/");
 
 	return {
 		success: true,
 		message: "Successfully inserted",
-		errors: null,
+		errors: undefined,
 		input: formData.url as string,
 	};
 };

@@ -30,8 +30,9 @@ async function Page({ params }: { params: Promise<{ param: string }> }) {
 	}
 
 	if (data) {
-		const url = data.url || "/";
-		redirect(url);
+		if (data.url) {
+			redirect(data.url);
+		}
 	}
 
 	return null;

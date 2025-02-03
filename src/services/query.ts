@@ -50,12 +50,15 @@ export const getAllUrls = async (id: string) => {
 //
 export const getUrl = async (short_code: string) => {
 	try {
-		return await db
+		const query = db
 			.selectFrom("urls")
 			.selectAll()
 			.where("short_code", "=", short_code)
-			.where("active", "=", true)
-			.executeTakeFirst();
+			.where("active", "=", true);
+
+		const result = await query.executeTakeFirst();
+
+		return result;
 	} catch (e) {
 		console.error(e);
 		return null;

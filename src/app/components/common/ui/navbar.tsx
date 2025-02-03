@@ -1,9 +1,9 @@
 import SignoutComponent from "@/app/components/auth/signout/page";
-import { isSession } from "@/lib/schema/server";
+import { isUser } from "@/lib/schema/server";
 import Link from "next/link";
 
 async function Navbar() {
-	const session = await isSession();
+	const user = await isUser();
 
 	// console.log("thissession", session?.session);
 	return (
@@ -24,7 +24,7 @@ async function Navbar() {
 					<span>SnipURL</span>
 				</Link>
 				<div className={""}>
-					{!session?.session ? (
+					{!user ? (
 						<div className={"flex gap-4 items-center"}>
 							<a
 								href={"/auth/signin"}

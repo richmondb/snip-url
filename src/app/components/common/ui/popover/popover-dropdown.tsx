@@ -1,6 +1,6 @@
 "use client";
 import Modal from "@/app/components/common/ui/modal/Modal";
-import { deleteUrl, toggleActive } from "@/services/db-actions";
+import { deleteUrl, toggleUrlState } from "@/services/query";
 import {
 	CloseButton,
 	Popover,
@@ -9,17 +9,17 @@ import {
 } from "@headlessui/react";
 import React from "react";
 
-function PopoverDropdown({ id, url }: { id: string; url: string }) {
+function PopoverDropdown({ id, url }: { id: number; url: string }) {
 	const handleToggle = async () => {
-		const result = await toggleActive(id);
-		if (result) {
+		const result = await toggleUrlState(id);
+		if (result.success) {
 			// console.log("result", result);
 		}
 	};
 
 	const handleDelete = async () => {
 		const result = await deleteUrl(id);
-		if (result) {
+		if (result.success) {
 			// console.log("result", result);
 			close();
 		}

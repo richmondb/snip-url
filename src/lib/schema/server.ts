@@ -3,9 +3,16 @@
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 
-export const isSession = async () => {
+export const isUser = async () => {
 	const session = await auth.api.getSession({
 		headers: await headers(),
 	});
-	return session;
+
+	if (!session) {
+		return null;
+	}
+
+	const { id } = session.user;
+
+	return id;
 };

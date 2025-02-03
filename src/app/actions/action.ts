@@ -1,9 +1,9 @@
 "use server";
 
-import { insertUrl } from "@/db/db";
 import generateShortCode from "@/lib/generate-short-url";
-import { isSession } from "@/lib/schema/server";
+import { isUser } from "@/lib/schema/server";
 import { urlSchema } from "@/lib/schema/url-schema";
+import { insertUrl } from "@/services/query";
 import { revalidatePath } from "next/cache";
 
 type returnState =
@@ -49,9 +49,16 @@ export const addUrl = async (prevState: returnState, form: FormData) => {
 	const uid = generateShortCode();
 
 	try {
-		const session = await isSession();
+		const userId = await isUser();
 
-		const userId = session?.user.id as string;
+		if (!userId) {
+			return {
+				success: false,
+				message: "User not found",
+				errors: undefined,
+				input: formData.url as string,
+			};
+		}
 
 		const result = insertUrl(formData.url as string, uid, userId);
 

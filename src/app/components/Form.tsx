@@ -10,8 +10,6 @@ function Form() {
 
 	const { data } = useSession();
 
-	// console.log(data);
-
 	return (
 		<div className={"lg:w-1/2"}>
 			<Glasscard>
@@ -78,7 +76,7 @@ function Form() {
 									className="md:w-1/2 p-2 px-8 rounded-lg bg-gradient-to-r from-cyan-400 to-purple-400 text-white font-bold text-center text-lg flex justify-center items-center"
 									href={"/auth/signin"}
 								>
-									<span className={"font-bold"}>Register for free</span>
+									<span className={"font-bold"}>Shorten URL</span>
 								</Link>
 							)}
 						</div>

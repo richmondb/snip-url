@@ -57,7 +57,6 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 
 ### Libraries
 
-- [`src/lib/definitions/url-type.ts`](src/lib/definitions/url-type.ts): Type definitions for URLs.
 - [`src/lib/validate-url-string.ts`](src/lib/validate-url-string.ts): Function to validate URL strings.
 - [`src/lib/generate-short-url.ts`](src/lib/generate-short-url.ts): Function to generate short URLs.
 - [`src/lib/schema/url-schema.ts`](src/lib/schema/url-schema.ts): URL schema validation using `zod`.

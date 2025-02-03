@@ -25,7 +25,7 @@ export const addUrl = async (prevState: returnState, form: FormData) => {
 
 	const parsedUrl = urlSchema.safeParse(formData);
 
-	console.log("parsedurl success", parsedUrl.success);
+	// console.log("parsedurl success", parsedUrl.success);
 
 	if (!parsedUrl.success) {
 		const errors = parsedUrl.error.flatten().fieldErrors;
@@ -76,7 +76,7 @@ export const addUrl = async (prevState: returnState, form: FormData) => {
 			};
 		}
 
-		console.log("result", result);
+		// console.log("result", result);
 
 		revalidatePath("/");
 

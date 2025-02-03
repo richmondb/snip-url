@@ -22,7 +22,7 @@ async function signinAction(state: SigninFormState, formData: FormData) {
 
 	// If any form fields are invalid, return early
 	if (!validatedFields.success) {
-		console.log(validatedFields.error.flatten().fieldErrors);
+		// console.log(validatedFields.error.flatten().fieldErrors);
 		return {
 			errors: validatedFields.error.flatten().fieldErrors,
 			input: rawData,
@@ -31,9 +31,9 @@ async function signinAction(state: SigninFormState, formData: FormData) {
 
 	const { email, password } = validatedFields.data;
 
-	console.log({ email, password });
+	// console.log({ email, password });
 
-	// Call the provider or db to create a user...
+	// Call the provider or db to create a user in client...
 	// const { error } = await signIn.email(
 	// 	{
 	// 		email,

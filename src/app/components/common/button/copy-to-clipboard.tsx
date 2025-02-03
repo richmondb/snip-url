@@ -8,10 +8,11 @@ type CopyToClipboardProps = {
 };
 function CopyToClipboard({ short_code }: CopyToClipboardProps) {
 	const path = getBasePath();
+
 	const copyToClipboard = async (short_code: string) => {
 		try {
 			await navigator.clipboard.writeText(`${path}/${short_code}`).then(() => {
-				toast.success("Copied to clipboard");
+				toast.success(process.env.NEXT_PUBLIC_VERCEL_URL);
 			});
 		} catch (err) {
 			console.error("Failed to copy: ", err);

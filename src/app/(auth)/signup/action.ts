@@ -33,7 +33,7 @@ async function signupAction(state: SignupFormState, formData: FormData) {
 
 	const { username, email, password } = validatedFields.data;
 
-	console.log({ username, email, password });
+	// console.log({ username, email, password });
 
 	// Call the provider or db to create a user...
 	const { error } = await signUp.email(

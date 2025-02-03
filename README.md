@@ -1,6 +1,6 @@
 # SnipURL - URL Shortener
 
-SnipURL is a URL shortener application built with [Next.js](https://nextjs.org). It allows users to shorten long URLs for easier sharing and management.
+SnipURL is a URL shortening service that allows users to effortlessly shorten their URLs and share them anywhere. It makes link sharing simple, fast, and effective.
 
 ## Getting Started
 
@@ -36,9 +36,7 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 
 ### Database
 
-- `db.sqlite`, `db.sqlite-shm`, `db.sqlite-wal`: SQLite database files.
-- [`src/db/db.ts`](src/db/db.ts): Database operations using `better-sqlite3`.
-
+- [`kysely`](kysely): Kysely for Type safety and SQL queries.
 ### Application
 
 - [`src/app/page.tsx`](src/app/page.tsx): Main page of the application.
@@ -83,41 +81,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ## To-Do List
 
 ### General
-- [ ] Implement authentication in the future
-
-### Configuration
-- [ ] Review and update `.gitignore`
-- [ ] Configure `next.config.ts`
-- [ ] Review `tsconfig.json`
-- [ ] Customize `tailwind.config.ts`
-- [ ] Set up `eslint.config.mjs`
-- [ ] Set up `postcss.config.mjs`
-- [ ] Review `biome.json`
-
-### Database
-- [ ] Manage SQLite database files (`db.sqlite`, `db.sqlite-shm`, `db.sqlite-wal`)
-- [ ] Implement database operations in `src/db/db.ts`
-
-### Application
-- [ ] Implement URL validation in `src/lib/validate-url-string.ts`
-- [ ] Implement short URL generation in `src/lib/generate-short-url.ts`
-- [ ] Define URL types in `src/lib/definitions/url-type.ts`
-- [ ] Define URL schema in `src/lib/schema/url-schema.ts`
-- [ ] Implement URL actions in `src/app/actions/action.ts`
-- [ ] Implement home page in `src/app/page.tsx`
-- [ ] Implement form component in `src/app/components/Form.tsx`
-- [ ] Implement URL list component in `src/app/components/url-list/UrlList.tsx`
-- [ ] Implement layout in `src/app/layout.tsx`
-- [ ] Implement global styles in `src/app/globals.css`
-
-### UI Components
-- [ ] Implement glass card component in `src/app/components/common/ui/card/glasscard.tsx`
-- [ ] Implement navbar component in `src/app/components/common/ui/navbar.tsx`
-- [ ] Implement modal component in `src/app/components/common/ui/modal/Modal.tsx`
-- [ ] Implement popover dropdown component in `src/app/components/common/ui/popover/popover-dropdown.tsx`
-
-### Services
-- [ ] Implement database actions in `src/services/db-actions.ts`
-
-### Miscellaneous
-- [ ] Review and update `README.md`
+- [X] Implement authentication in the future
+- [ ] Add a feature to view the number of clicks on a URL

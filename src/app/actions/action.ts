@@ -13,7 +13,8 @@ type returnState =
 			errors?: {
 				url?: string[];
 			} | null;
-			input?: string;
+			short_code?: string;
+			id?: number | undefined;
 	  }
 	| undefined;
 
@@ -32,7 +33,8 @@ export const addUrl = async (prevState: returnState, form: FormData) => {
 			success: false,
 			message: undefined,
 			errors: errors,
-			input: formData.url as string,
+			short_code: undefined,
+			id: undefined,
 		});
 
 		revalidatePath("/");
@@ -41,7 +43,8 @@ export const addUrl = async (prevState: returnState, form: FormData) => {
 			success: false,
 			message: undefined,
 			errors: errors,
-			input: formData.url as string,
+			short_code: undefined,
+			id: undefined,
 		};
 	}
 
@@ -56,29 +59,43 @@ export const addUrl = async (prevState: returnState, form: FormData) => {
 				success: false,
 				message: "User not found",
 				errors: undefined,
-				input: formData.url as string,
+				short_code: undefined,
+				id: undefined,
 			};
 		}
 
-		const result = insertUrl(formData.url as string, uid, userId);
+		const result = await insertUrl(formData.url as string, uid, userId);
 
-		console.log("session", result);
+		if (!result.success) {
+			return {
+				success: false,
+				message: "Failed to insert url",
+				errors: undefined,
+				short_code: undefined,
+				id: undefined,
+			};
+		}
+
+		console.log("result", result);
+
+		revalidatePath("/");
+
+		return {
+			success: true,
+			message: "Successfully inserted",
+			errors: undefined,
+			short_code: result.short_code,
+			id: result.id,
+		};
 	} catch (e) {
+		revalidatePath("/");
 		console.error(e);
 		return {
 			success: false,
 			message: undefined,
 			errors: undefined,
-			input: formData.url as string,
+			short_code: undefined,
+			id: undefined,
 		};
 	}
-
-	revalidatePath("/");
-
-	return {
-		success: true,
-		message: "Successfully inserted",
-		errors: undefined,
-		input: formData.url as string,
-	};
 };

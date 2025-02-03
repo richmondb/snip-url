@@ -1,3 +1,4 @@
+import CopyToClipboard from "@/app/components/common/button/copy-to-clipboard";
 import Glasscard from "@/app/components/common/ui/card/glasscard";
 import PopoverDropdown from "@/app/components/common/ui/popover/popover-dropdown";
 import { isUser } from "@/lib/schema/server";
@@ -40,6 +41,9 @@ async function UrlList() {
 									scope="col"
 									className="px-6 py-3 bg-gray-50 dark:bg-gray-800"
 								>
+									Link
+								</th>
+								<th scope="col" className="px-6 py-3 ">
 									Options
 								</th>
 							</tr>
@@ -72,6 +76,9 @@ async function UrlList() {
 										)}
 									</td>
 									<td className="px-6 py-4 bg-gray-50 dark:bg-gray-800 text-center">
+										<CopyToClipboard short_code={item.short_code} />
+									</td>
+									<td className="px-6 py-4 ">
 										<PopoverDropdown
 											id={item.id}
 											url={item.url}

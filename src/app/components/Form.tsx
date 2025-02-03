@@ -2,13 +2,27 @@
 import { addUrl } from "@/app/actions/action";
 import Glasscard from "@/app/components/common/ui/card/glasscard";
 import { useSession } from "@/lib/auth-client";
+import { getBasePath } from "@/utils/getBasePath";
 import Link from "next/link";
-import React, { useActionState, useEffect, useState } from "react";
+import React, { useActionState, useEffect } from "react";
+import { toast } from "sonner";
 
 function Form() {
 	const [state, action, isPending] = useActionState(addUrl, undefined);
 
 	const { data } = useSession();
+
+	const basepath = getBasePath();
+
+	useEffect(() => {
+		if (state?.success) {
+			navigator.clipboard
+				.writeText(`${basepath}/${state.short_code}`)
+				.then(() => {
+					toast.success("Copied to clipboard");
+				});
+		}
+	}, [state, basepath]);
 
 	return (
 		<div className={"lg:w-1/2"}>
@@ -85,20 +99,6 @@ function Form() {
 			</Glasscard>
 		</div>
 	);
-}
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function TimedMessageConcise({ message }: { message: string }) {
-	const [isVisible, setIsVisible] = useState(true);
-
-	useEffect(() => {
-		if (message) {
-			const timeoutId = setTimeout(() => setIsVisible(false), 3000);
-			return () => clearTimeout(timeoutId);
-		}
-	}, [message]);
-
-	return isVisible && message ? <p>{message}</p> : null;
 }
 
 export default Form;

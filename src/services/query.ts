@@ -17,7 +17,7 @@ export const insertUrl = async (
 				user_id: userId,
 				active: true,
 			})
-			.returning("id");
+			.returning(["id", "short_code"]);
 
 		const result = await query.executeTakeFirst();
 
@@ -25,6 +25,7 @@ export const insertUrl = async (
 			success: true,
 			message: "Url inserted",
 			id: result?.id,
+			short_code: result?.short_code,
 		};
 	} catch (e) {
 		console.error(e);

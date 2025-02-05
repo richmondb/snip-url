@@ -83,3 +83,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ### General
 - [X] Implement authentication in the future
 - [ ] Add a feature to view the number of clicks on a URL
+- [ ] Add a feature to view the number of unique clicks on a URL
+- [ ] Add Profile page to edit user details

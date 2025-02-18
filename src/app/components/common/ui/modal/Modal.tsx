@@ -29,7 +29,7 @@ export default function Modal({ confirmDelete }: ModalProps) {
 				onClick={open}
 				className="p-2.5 text-start hover:bg-white/10 text-red-600 transition-all duration-300"
 			>
-				Open dialog
+				Delete
 			</Button>
 
 			<Dialog
@@ -48,11 +48,10 @@ export default function Modal({ confirmDelete }: ModalProps) {
 								as="h3"
 								className="text-base/7 font-medium text-white"
 							>
-								Payment successful
+								Are you sure?
 							</DialogTitle>
 							<p className="mt-2 text-sm/6 text-white/50">
-								Your payment has been successfully submitted. We’ve sent you an
-								email with all of the details of your order.
+								Do you really want to delete this item? This process cannot be undone.
 							</p>
 							<div className="mt-4">
 								<div className="flex gap-3">

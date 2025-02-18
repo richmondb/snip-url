@@ -70,8 +70,8 @@ async function signinAction(state: SigninFormState, formData: FormData) {
 		if (error instanceof APIError) {
 			console.log(error.message);
 			return {
-				error: error.message,
-				message: error.message,
+				error: error.status,
+				message: "Invalid email or password",
 				input: rawData,
 			};
 		}

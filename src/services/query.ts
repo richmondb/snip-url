@@ -37,6 +37,7 @@ export const insertUrl = async (
 };
 //
 export const getAllUrls = async (id: string) => {
+	// await new Promise((resolve) => setTimeout(resolve, 5000));
 	try {
 		return await db
 			.selectFrom("urls")
